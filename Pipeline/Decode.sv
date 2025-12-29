@@ -4,18 +4,18 @@ module Decode (
     input logic clock,
     input logic reset,
     input logic interrupt,
-    input fetchDecodePayload fetchDecodePayload,
+    input fetchDecodePayload_ fetchDecodePayload,
     input control decodeExecuteControl,
-    output decodeExecutePayload decodeExecutePayload,
+    output decodeExecutePayload_ decodeExecutePayload,
     output logic [4:0] readAddress1,
     output logic [4:0] readAddress2,
     input [31:0] readData1,
     input [31:0] readData2
 );
 
-    opcode opcode;
-    decodeExecutePayload decodeExecuteCandidate;
-    assign opcode = fetchDecodePayload.instruction[6:0];
+    opcode_ opcode;
+    decodeExecutePayload_ decodeExecuteCandidate;
+    assign opcode = opcode_'(fetchDecodePayload.instruction[6:0]);
 
     always_comb begin
         decodeExecuteCandidate = '0;

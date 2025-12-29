@@ -2,8 +2,20 @@ import pack::*;
 
 module Top (
     input logic clock,
-    input logic reset
+    input logic reset,
+    input logic interrupt,
+
+    // debug outputs
+    output logic [31:0] dbg_instructionAddress,
+    output logic [31:0] dbg_fd_pc,
+    output logic [31:0] dbg_fd_instr,
+    output logic        dbg_fd_valid
 );
+
+    assign dbg_instructionAddress = instructionAddress;
+    assign dbg_fd_pc              = fetchDecodePayload.programCounter;
+    assign dbg_fd_instr           = fetchDecodePayload.instruction;
+    assign dbg_fd_valid           = fetchDecodePayload.valid;
 
     // IMEM
     logic instructionDataValid;
@@ -25,30 +37,26 @@ module Top (
     control memoryWritebackControl;
     logic controlReset;
 
-    // Branch Predictor
-    logic [31:0] branchPredictData;
-    logic branchPredictValid;
-
     // Register File
     logic [31:0] readData1;
     logic [31:0] readData2;
 
     // Fetch Stage
     logic [31:0] instructionAddress;
-    fetchDecodePayload fetchDecodePayload;
+    fetchDecodePayload_ fetchDecodePayload;
     
     // Decode Stage
-    decodeExecutePayload decodeExecutePayload;
+    decodeExecutePayload_ decodeExecutePayload;
     logic [4:0] readAddress1;
     logic [4:0] readAddress2;
 
     // Execute Stage
     logic branchValid;
     logic [31:0] branchData;
-    executeMemoryPayload executeMemoryPayload;
+    executeMemoryPayload_ executeMemoryPayload;
 
     // Memory Stage
-    memoryWritebackPayload memoryWritebackPayload;
+    memoryWritebackPayload_ memoryWritebackPayload;
     logic [31:0] addressRegister;
     logic [31:0] storeData;
     logic [3:0] realStoreByteEnable;

@@ -4,9 +4,9 @@ module Execute (
     input logic clock,
     input logic reset,
     input logic interrupt,
-    input decodeExecutePayload decodeExecutePayload,
+    input decodeExecutePayload_ decodeExecutePayload,
     input control executeMemoryControl,
-    output executeMemoryPayload executeMemoryPayload,
+    output executeMemoryPayload_ executeMemoryPayload,
     output logic branchValid,
     output logic [31:0] branchData
 );

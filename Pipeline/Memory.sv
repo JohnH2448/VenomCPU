@@ -4,14 +4,14 @@ module Memory (
     input logic clock,
     input logic reset,
     input logic interrupt,
-    input executeMemoryPayload executeMemoryPayload,
+    input executeMemoryPayload_ executeMemoryPayload,
     input control memoryWritebackControl,
     input logic [31:0] loadData,
     input logic loadDataValid,
     output logic storeValid, // clocked for mem
     output logic stallControl,
     input logic storeComplete,
-    output memoryWritebackPayload memoryWritebackPayload,
+    output memoryWritebackPayload_ memoryWritebackPayload,
     output logic [31:0] addressRegister,
     output logic [31:0] storeData,
     output logic [3:0] realStoreByteEnable
@@ -21,6 +21,7 @@ module Memory (
     logic storeConfirm;
     logic storeReq;
     logic [4:0] shamt;
+    logic [3:0] storeByteEnable;
 
     assign shamt = {addressRegister[1:0], 3'b000};
     assign storeData = executeMemoryPayload.storeData << shamt;
@@ -142,5 +143,6 @@ module Memory (
     end
 
 endmodule
+
 
 // Do store buffer and dependency checks on loads

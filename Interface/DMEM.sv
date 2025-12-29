@@ -4,31 +4,28 @@ module Dmem #(
     input  logic        clock,
     input  logic        reset,
 
-    // From CPU Memory stage
-    input  logic [31:0] address,      // Memory.addressRegister
-    input  logic [31:0] storeData,    // Memory.storeData (already shifted)
-    input  logic [3:0]  byteEnable,   // Memory.realStoreByteEnable (active bytes)
-    input  logic        storeValid,   // Memory.storeValid (write request)
+    input  logic [31:0] address,
+    input  logic [31:0] storeData,
+    input  logic [3:0]  byteEnable,
+    input  logic        storeValid,
 
-    // Back to CPU Memory stage
-    output logic [31:0] loadData,      // word read from memory
-    output logic        loadDataValid, // 1 iff loadData matches current address
-    output logic        storeComplete  // 1 for one cycle when store is done
+    output logic [31:0] loadData,
+    output logic        loadDataValid,
+    output logic        storeComplete
 );
 
-    // Simple word-addressed RAM
     localparam int ADDR_LSB = 2; // ignore byte offset bits [1:0]
     localparam int ADDR_MSB = ADDR_LSB + $clog2(DEPTH_WORDS) - 1;
 
     logic [31:0] mem [0:DEPTH_WORDS-1];
-
-    // For posedge detection of storeValid
     logic storeValid_q;
 
-    // -------- LOAD PATH (zero-wait-state) --------
-    // Combinational read: always present correct data for the *current* address.
-    // loadDataValid is 1 whenever we're not in reset, so the handshake degenerates
-    // to "always ready" like a single-cycle SRAM.
+    initial begin
+        integer i;
+        for (i = 0; i < DEPTH_WORDS; i++)
+            mem[i] = 32'h0;
+    end
+
     always_comb begin
         if (reset) begin
             loadData      = 32'h00000000;
@@ -39,16 +36,12 @@ module Dmem #(
         end
     end
 
-    // -------- STORE PATH --------
-    // On posedge of storeValid, write selected bytes and pulse storeComplete.
     always_ff @(posedge clock) begin
         if (reset) begin
             storeValid_q   <= 1'b0;
             storeComplete  <= 1'b0;
         end else begin
-            storeComplete  <= 1'b0; // default: no completion
-
-            // rising edge detect
+            storeComplete  <= 1'b0;
             if (storeValid && !storeValid_q) begin
                 int idx;
                 logic [31:0] word;
@@ -63,7 +56,7 @@ module Dmem #(
                 if (byteEnable[3]) word[31:24] = storeData[31:24];
 
                 mem[idx]       <= word;
-                storeComplete  <= 1'b1;  // write is visible by next cycle's load
+                storeComplete  <= 1'b1;
             end
 
             storeValid_q <= storeValid;

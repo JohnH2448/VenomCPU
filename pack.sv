@@ -12,7 +12,7 @@ package pack;
     BR_GE = 3'd4,
     BR_LTU = 3'd5,
     BR_GEU = 3'd6
-  } branchType; // Parallel comparator setting. evaluates to 1
+  } branchType_; // Parallel comparator setting. evaluates to 1
 
   typedef enum logic [6:0] {
     OPCODE_ALU_REG = 7'b0110011, // R-type (reg-reg)
@@ -26,21 +26,21 @@ package pack;
     OPCODE_JAL = 7'b1101111, // J-type
     OPCODE_JALR = 7'b1100111, // I-type
     OPCODE_SYSTEM = 7'b1110011  // I-type (CSR, ECALL, EBREAK) DO LATER
-  } opcode;
+  } opcode_;
 
   typedef enum logic [2:0] {
     WB_NONE = 3'b000,  // no writeback (or bubble/illegal)
     WB_ALU = 3'b001,  // write ALU result
     WB_MEM = 3'b010,  // write load data
     WB_PC4 = 3'b011   // write PC+4 (JAL/JALR)
-  } writebackType;
+  } writebackType_;
 
   typedef enum logic [1:0] {
     JUMP_NONE = 2'b00,
     JUMP_JAL = 2'b01,
     JUMP_JALR = 2'b10
-  } jumpType;
-  
+  } jumpType_;
+
   typedef enum logic [3:0] {
     ALU_ADD = 4'd0,
     ALU_SUB = 4'd1,
@@ -52,21 +52,21 @@ package pack;
     ALU_SRA = 4'd7,
     ALU_SLT = 4'd8,
     ALU_SLTU = 4'd9
-  } aluOperation;
+  } aluOperation_;
 
   typedef enum logic [1:0] {
     ALU_RS1_RS2 = 2'b00, // normal R-type, branches
     ALU_RS1_IMM = 2'b01, // I-type, load/store, JALR
     ALU_PC_IMM = 2'b10, // AUIPC, JAL, branch target
     ALU_ZERO_IMM = 2'b11 // LUI
-  } aluSource;
+  } aluSource_;
 
   typedef struct packed {
     logic [31:0] instruction;
     logic [31:0] programCounter;
     logic [31:0] programCounterPlus4;
     logic valid;
-  } fetchDecodePayload;
+  } fetchDecodePayload_;
 
   typedef struct packed {
     logic stall;
@@ -80,18 +80,18 @@ package pack;
     logic [31:0] registerData2;
     logic [4:0] destinationRegister;
     logic [31:0] immediate;
-    aluSource aluSource;
+    aluSource_ aluSource;
     logic memoryReadEnable;
     logic memoryWriteEnable;
     logic [1:0] memoryWidth;
     logic memorySigned;
-    branchType branchType; 
-    aluOperation aluOperation;
-    jumpType jumpType;
-    writebackType writebackType;
+    branchType_ branchType; 
+    aluOperation_ aluOperation;
+    jumpType_ jumpType;
+    writebackType_ writebackType;
     logic illegal;
     logic valid;
-  } decodeExecutePayload;
+  } decodeExecutePayload_;
 
     typedef struct packed {
       logic [31:0] programCounter;
@@ -103,10 +103,10 @@ package pack;
       logic memorySigned;
       logic [31:0] result;
       logic [31:0] storeData;
-      writebackType writebackType;
+      writebackType_ writebackType;
       logic illegal;
       logic valid;
-    } executeMemoryPayload;
+    } executeMemoryPayload_;
     
     typedef struct packed {
       logic [31:0] programCounter;
@@ -115,6 +115,6 @@ package pack;
       logic writebackEnable;
       logic illegal;
       logic valid;
-    } memoryWritebackPayload;
+    } memoryWritebackPayload_;
     
 endpackage 

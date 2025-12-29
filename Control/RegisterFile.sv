@@ -30,15 +30,11 @@ module RegisterFile (
     end
     
     always_ff @(posedge clock) begin
-
         if (destinationEnable) begin
             if (writeAddress != 5'd0) begin
                 registers[writeAddress] <= writeData;
             end
         end
-
-
-
     end
 
 endmodule

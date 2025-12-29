@@ -4,7 +4,7 @@ module Writeback (
     input logic clock,
     input logic reset,
     input logic interrupt,
-    input memoryWritebackPayload memoryWritebackPayload,
+    input memoryWritebackPayload_ memoryWritebackPayload,
     output logic destinationEnable,
     output logic [4:0] writeAddress,
     output logic [31:0] writeData
@@ -18,3 +18,4 @@ module Writeback (
            !memoryWritebackPayload.illegal;
 
 endmodule
+

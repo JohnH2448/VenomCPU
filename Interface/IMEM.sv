@@ -16,8 +16,11 @@ module Imem #(
 
     logic [31:0] mem [0:DEPTH_WORDS-1];
 
-    // Optional: preload from a hex file
-    // initial $readmemh("imem.hex", mem);
+    // For SIM ONLY
+    initial begin
+        $display("IMEM: loading imem.hex");
+        $readmemh("imem.hex", mem);
+    end
 
     always_comb begin
         if (reset) begin
