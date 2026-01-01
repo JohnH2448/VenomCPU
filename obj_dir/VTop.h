@@ -27,10 +27,21 @@ class alignas(VL_CACHE_LINE_BYTES) VTop VL_NOT_FINAL : public VerilatedModel {
     VL_IN8(&clock,0,0);
     VL_IN8(&reset,0,0);
     VL_IN8(&__SYM__interrupt,0,0);
-    VL_OUT8(&dbg_fd_valid,0,0);
-    VL_OUT(&dbg_instructionAddress,31,0);
-    VL_OUT(&dbg_fd_pc,31,0);
-    VL_OUT(&dbg_fd_instr,31,0);
+    VL_OUT8(&dbg_IF_ID_Valid,0,0);
+    VL_OUT8(&dbg_ID_EX_Valid,0,0);
+    VL_OUT8(&dbg_EX_MEM_Valid,0,0);
+    VL_OUT8(&dbg_MEM_WB_Valid,0,0);
+    VL_OUT8(&dbg_trap,0,0);
+    VL_OUT8(&dbg_IMEM_valid,0,0);
+    VL_OUTW(&dbg_registers,1023,0,32);
+    VL_OUT(&dbg_IF_ID_programCounter,31,0);
+    VL_OUT(&dbg_IF_ID_instruction,31,0);
+    VL_OUT(&dbg_ID_EX_programCounter,31,0);
+    VL_OUT(&dbg_EX_MEM_programCounter,31,0);
+    VL_OUT(&dbg_MEM_WB_programCounter,31,0);
+    VL_OUT(&dbg_IMEM_data,31,0);
+    VL_OUT(&dbg_pc,31,0);
+    VL_OUT(&dbg_wb_value,31,0);
 
     // CELLS
     // Public to allow access to /* verilator public */ items.

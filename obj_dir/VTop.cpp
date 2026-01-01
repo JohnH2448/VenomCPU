@@ -12,10 +12,21 @@ VTop::VTop(VerilatedContext* _vcontextp__, const char* _vcname__)
     , clock{vlSymsp->TOP.clock}
     , reset{vlSymsp->TOP.reset}
     , __SYM__interrupt{vlSymsp->TOP.__SYM__interrupt}
-    , dbg_fd_valid{vlSymsp->TOP.dbg_fd_valid}
-    , dbg_instructionAddress{vlSymsp->TOP.dbg_instructionAddress}
-    , dbg_fd_pc{vlSymsp->TOP.dbg_fd_pc}
-    , dbg_fd_instr{vlSymsp->TOP.dbg_fd_instr}
+    , dbg_IF_ID_Valid{vlSymsp->TOP.dbg_IF_ID_Valid}
+    , dbg_ID_EX_Valid{vlSymsp->TOP.dbg_ID_EX_Valid}
+    , dbg_EX_MEM_Valid{vlSymsp->TOP.dbg_EX_MEM_Valid}
+    , dbg_MEM_WB_Valid{vlSymsp->TOP.dbg_MEM_WB_Valid}
+    , dbg_trap{vlSymsp->TOP.dbg_trap}
+    , dbg_IMEM_valid{vlSymsp->TOP.dbg_IMEM_valid}
+    , dbg_registers{vlSymsp->TOP.dbg_registers}
+    , dbg_IF_ID_programCounter{vlSymsp->TOP.dbg_IF_ID_programCounter}
+    , dbg_IF_ID_instruction{vlSymsp->TOP.dbg_IF_ID_instruction}
+    , dbg_ID_EX_programCounter{vlSymsp->TOP.dbg_ID_EX_programCounter}
+    , dbg_EX_MEM_programCounter{vlSymsp->TOP.dbg_EX_MEM_programCounter}
+    , dbg_MEM_WB_programCounter{vlSymsp->TOP.dbg_MEM_WB_programCounter}
+    , dbg_IMEM_data{vlSymsp->TOP.dbg_IMEM_data}
+    , dbg_pc{vlSymsp->TOP.dbg_pc}
+    , dbg_wb_value{vlSymsp->TOP.dbg_wb_value}
     , rootp{&(vlSymsp->TOP)}
 {
     // Register model with the context

@@ -8,12 +8,22 @@ module RegisterFile (
     input logic [4:0] writeAddress,
     input logic [31:0] writeData,
     output logic [31:0] readData1,
-    output logic [31:0] readData2
+    output logic [31:0] readData2,
+
+    // debug
+    output logic [1023:0] debug_regs_flat
 );
     logic [31:0] registers [31:0];
 
     initial begin
         registers[0] = 32'd0;
+    end
+
+    // debug
+    always_comb begin
+        for (int i = 0; i < 32; i++) begin
+            debug_regs_flat[i*32 +: 32] = registers[i];
+        end
     end
 
     always_comb begin

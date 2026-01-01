@@ -78,6 +78,8 @@ package pack;
     logic [31:0] programCounterPlus4;
     logic [31:0] registerData1;
     logic [31:0] registerData2;
+    logic [4:0] readAddress1;
+    logic [4:0] readAddress2;
     logic [4:0] destinationRegister;
     logic [31:0] immediate;
     aluSource_ aluSource;

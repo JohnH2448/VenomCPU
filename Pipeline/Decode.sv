@@ -16,6 +16,8 @@ module Decode (
     opcode_ opcode;
     decodeExecutePayload_ decodeExecuteCandidate;
     assign opcode = opcode_'(fetchDecodePayload.instruction[6:0]);
+    assign decodeExecuteCandidate.readAddress1 = readAddress1;
+    assign decodeExecuteCandidate.readAddress2 = readAddress2;
 
     always_comb begin
         decodeExecuteCandidate = '0;

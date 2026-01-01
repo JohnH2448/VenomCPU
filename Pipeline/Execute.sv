@@ -8,7 +8,11 @@ module Execute (
     input control executeMemoryControl,
     output executeMemoryPayload_ executeMemoryPayload,
     output logic branchValid,
-    output logic [31:0] branchData
+    output logic [31:0] branchData,
+    input logic forwardEnable1,
+    input logic forwardEnable2,
+    input logic [31:0] forwardData1,
+    input logic [31:0] forwardData2
 );
 
     logic [31:0] operand1;
@@ -25,11 +29,23 @@ module Execute (
         unique case (decodeExecutePayload.aluSource)
             default:;
             ALU_RS1_RS2: begin
-                operand1 = decodeExecutePayload.registerData1;
-                operand2 = decodeExecutePayload.registerData2;
+                if (forwardEnable1) begin
+                    operand1 = forwardData1;
+                end else begin
+                    operand1 = decodeExecutePayload.registerData1;
+                end
+                if (forwardEnable2) begin
+                    operand2 = forwardData2;
+                end else begin
+                    operand2 = decodeExecutePayload.registerData2;
+                end
             end
             ALU_RS1_IMM: begin
-                operand1 = decodeExecutePayload.registerData1;
+                if (forwardEnable1) begin
+                    operand1 = forwardData1;
+                end else begin
+                    operand1 = decodeExecutePayload.registerData1;
+                end
                 operand2 = decodeExecutePayload.immediate;
             end
             ALU_PC_IMM: begin

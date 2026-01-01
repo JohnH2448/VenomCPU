@@ -1,0 +1,5 @@
+verilator -Wall -Wno-fatal --cc pack.sv Top.sv Control/*.sv Pipeline/*.sv Interface/*.sv --top-module Top --exe sim_main.cpp
+
+make -C obj_dir -f VTop.mk -j$(nproc)
+
+./obj_dir/VTop
