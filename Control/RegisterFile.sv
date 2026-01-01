@@ -7,6 +7,7 @@ module RegisterFile (
     input logic destinationEnable,
     input logic [4:0] writeAddress,
     input logic [31:0] writeData,
+    input logic memoryWritebackValid,
     output logic [31:0] readData1,
     output logic [31:0] readData2,
 
@@ -30,12 +31,14 @@ module RegisterFile (
         if (readAddress1 == 5'd0) begin
             readData1 = 32'd0;
         end else begin
-            readData1 = registers[readAddress1];
+            readData1 = (destinationEnable && (writeAddress != 5'd0) && (writeAddress == readAddress1) && memoryWritebackValid)
+                ? writeData : registers[readAddress1];
         end
         if (readAddress2 == 5'd0) begin
             readData2 = 32'd0;
         end else begin
-            readData2 = registers[readAddress2];
+            readData2 = (destinationEnable && (writeAddress != 5'd0) && (writeAddress == readAddress2) && memoryWritebackValid)
+                ? writeData : registers[readAddress2];
         end
     end
     

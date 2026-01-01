@@ -96,6 +96,7 @@ module Top (
     logic destinationEnable;
     logic [4:0] writeAddress;
     logic [31:0] writeData;
+    logic memoryWritebackValid;
 
     // Forewarding Unit
 
@@ -179,7 +180,8 @@ module Top (
         .writeData(writeData),
         .readData1(readData1),
         .readData2(readData2),
-        .debug_regs_flat(debug_regs_flat)
+        .debug_regs_flat(debug_regs_flat),
+        .memoryWritebackValid(memoryWritebackValid)
     );
 
     Execute execute (
@@ -221,7 +223,8 @@ module Top (
         .memoryWritebackPayload(memoryWritebackPayload),
         .destinationEnable(destinationEnable),
         .writeAddress(writeAddress),
-        .writeData(writeData)
+        .writeData(writeData),
+        .memoryWritebackValid(memoryWritebackValid)
     );
 
     Imem #(.DEPTH_WORDS(1024)) imem_inst (

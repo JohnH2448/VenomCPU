@@ -370,26 +370,6 @@ VL_INLINE_OPT void VTop___024root___act_sequent__TOP__0(VTop___024root* vlSelf) 
     if (false && vlSelf) {}  // Prevent unused
     VTop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    VTop___024root___act_sequent__TOP__0\n"); );
-    // Body
-    vlSelf->Top__DOT__readData1 = ((0U == (IData)(vlSelf->Top__DOT__readAddress1))
-                                    ? 0U : vlSelf->Top__DOT__registerFile__DOT__registers
-                                   [vlSelf->Top__DOT__readAddress1]);
-}
-
-VL_INLINE_OPT void VTop___024root___act_sequent__TOP__1(VTop___024root* vlSelf) {
-    if (false && vlSelf) {}  // Prevent unused
-    VTop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    VTop___024root___act_sequent__TOP__1\n"); );
-    // Body
-    vlSelf->Top__DOT__readData2 = ((0U == (IData)(vlSelf->Top__DOT__readAddress2))
-                                    ? 0U : vlSelf->Top__DOT__registerFile__DOT__registers
-                                   [vlSelf->Top__DOT__readAddress2]);
-}
-
-VL_INLINE_OPT void VTop___024root___act_sequent__TOP__2(VTop___024root* vlSelf) {
-    if (false && vlSelf) {}  // Prevent unused
-    VTop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    VTop___024root___act_sequent__TOP__2\n"); );
     // Init
     CData/*0:0*/ Top__DOT__stallControl;
     Top__DOT__stallControl = 0;
@@ -746,6 +726,56 @@ VL_INLINE_OPT void VTop___024root___act_sequent__TOP__2(VTop___024root* vlSelf) 
                 = (2U | (IData)(vlSelf->Top__DOT__decodeExecuteControl));
         }
     }
+}
+
+VL_INLINE_OPT void VTop___024root___act_sequent__TOP__1(VTop___024root* vlSelf) {
+    if (false && vlSelf) {}  // Prevent unused
+    VTop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    VTop___024root___act_sequent__TOP__1\n"); );
+    // Body
+    vlSelf->Top__DOT__readData1 = ((0U == (IData)(vlSelf->Top__DOT__readAddress1))
+                                    ? 0U : (((((IData)(vlSelf->Top__DOT__destinationEnable) 
+                                               & (0U 
+                                                  != 
+                                                  (0x1fU 
+                                                   & (vlSelf->Top__DOT__memoryWritebackPayload[1U] 
+                                                      >> 3U)))) 
+                                              & ((0x1fU 
+                                                  & (vlSelf->Top__DOT__memoryWritebackPayload[1U] 
+                                                     >> 3U)) 
+                                                 == (IData)(vlSelf->Top__DOT__readAddress1))) 
+                                             & (IData)(vlSelf->dbg_MEM_WB_Valid))
+                                             ? ((vlSelf->Top__DOT__memoryWritebackPayload[1U] 
+                                                 << 0x1dU) 
+                                                | (vlSelf->Top__DOT__memoryWritebackPayload[0U] 
+                                                   >> 3U))
+                                             : vlSelf->Top__DOT__registerFile__DOT__registers
+                                            [vlSelf->Top__DOT__readAddress1]));
+}
+
+VL_INLINE_OPT void VTop___024root___act_sequent__TOP__2(VTop___024root* vlSelf) {
+    if (false && vlSelf) {}  // Prevent unused
+    VTop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    VTop___024root___act_sequent__TOP__2\n"); );
+    // Body
+    vlSelf->Top__DOT__readData2 = ((0U == (IData)(vlSelf->Top__DOT__readAddress2))
+                                    ? 0U : (((((IData)(vlSelf->Top__DOT__destinationEnable) 
+                                               & (0U 
+                                                  != 
+                                                  (0x1fU 
+                                                   & (vlSelf->Top__DOT__memoryWritebackPayload[1U] 
+                                                      >> 3U)))) 
+                                              & ((0x1fU 
+                                                  & (vlSelf->Top__DOT__memoryWritebackPayload[1U] 
+                                                     >> 3U)) 
+                                                 == (IData)(vlSelf->Top__DOT__readAddress2))) 
+                                             & (IData)(vlSelf->dbg_MEM_WB_Valid))
+                                             ? ((vlSelf->Top__DOT__memoryWritebackPayload[1U] 
+                                                 << 0x1dU) 
+                                                | (vlSelf->Top__DOT__memoryWritebackPayload[0U] 
+                                                   >> 3U))
+                                             : vlSelf->Top__DOT__registerFile__DOT__registers
+                                            [vlSelf->Top__DOT__readAddress2]));
 }
 
 VL_INLINE_OPT void VTop___024root___act_comb__TOP__0(VTop___024root* vlSelf) {
@@ -1436,13 +1466,13 @@ void VTop___024root___eval_act(VTop___024root* vlSelf) {
     VTop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    VTop___024root___eval_act\n"); );
     // Body
-    if ((2ULL & vlSelf->__VactTriggered.word(0U))) {
+    if ((1ULL & vlSelf->__VactTriggered.word(0U))) {
         VTop___024root___act_sequent__TOP__0(vlSelf);
     }
-    if ((4ULL & vlSelf->__VactTriggered.word(0U))) {
+    if ((2ULL & vlSelf->__VactTriggered.word(0U))) {
         VTop___024root___act_sequent__TOP__1(vlSelf);
     }
-    if ((1ULL & vlSelf->__VactTriggered.word(0U))) {
+    if ((4ULL & vlSelf->__VactTriggered.word(0U))) {
         VTop___024root___act_sequent__TOP__2(vlSelf);
     }
     if ((6ULL & vlSelf->__VactTriggered.word(0U))) {
@@ -2399,13 +2429,13 @@ void VTop___024root___eval_nba(VTop___024root* vlSelf) {
         VTop___024root___nba_sequent__TOP__0(vlSelf);
     }
     if ((0xaULL & vlSelf->__VnbaTriggered.word(0U))) {
-        VTop___024root___act_sequent__TOP__0(vlSelf);
-    }
-    if ((0xcULL & vlSelf->__VnbaTriggered.word(0U))) {
         VTop___024root___act_sequent__TOP__1(vlSelf);
     }
-    if ((9ULL & vlSelf->__VnbaTriggered.word(0U))) {
+    if ((0xcULL & vlSelf->__VnbaTriggered.word(0U))) {
         VTop___024root___act_sequent__TOP__2(vlSelf);
+    }
+    if ((9ULL & vlSelf->__VnbaTriggered.word(0U))) {
+        VTop___024root___act_sequent__TOP__0(vlSelf);
     }
     if ((0xeULL & vlSelf->__VnbaTriggered.word(0U))) {
         VTop___024root___act_comb__TOP__0(vlSelf);

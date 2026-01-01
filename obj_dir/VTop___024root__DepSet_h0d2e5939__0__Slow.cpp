@@ -416,12 +416,6 @@ VL_ATTR_COLD void VTop___024root___stl_sequent__TOP__0(VTop___024root* vlSelf) {
                                          [(0x3ffU & 
                                            (vlSelf->dbg_pc 
                                             >> 2U))]);
-    vlSelf->Top__DOT__destinationEnable = ((IData)(vlSelf->dbg_MEM_WB_Valid) 
-                                           & (IData)(
-                                                     (4U 
-                                                      == 
-                                                      (6U 
-                                                       & vlSelf->Top__DOT__memoryWritebackPayload[0U]))));
     vlSelf->Top__DOT__controlReset = 0U;
     if ((1U & (~ (IData)(vlSelf->reset)))) {
         if (((IData)(vlSelf->dbg_ID_EX_Valid) & (vlSelf->Top__DOT__decodeExecutePayload[0U] 
@@ -433,6 +427,12 @@ VL_ATTR_COLD void VTop___024root___stl_sequent__TOP__0(VTop___024root* vlSelf) {
             vlSelf->Top__DOT__controlReset = 1U;
         }
     }
+    vlSelf->Top__DOT__destinationEnable = ((IData)(vlSelf->dbg_MEM_WB_Valid) 
+                                           & (IData)(
+                                                     (4U 
+                                                      == 
+                                                      (6U 
+                                                       & vlSelf->Top__DOT__memoryWritebackPayload[0U]))));
     vlSelf->forwardEnable1 = 0U;
     vlSelf->forwardEnable2 = 0U;
     vlSelf->forwardData1 = 0U;
@@ -532,12 +532,12 @@ VL_ATTR_COLD void VTop___024root___stl_sequent__TOP__0(VTop___024root* vlSelf) {
         }
     }
     vlSelf->dbg_IMEM_data = vlSelf->Top__DOT__instructionData;
+    vlSelf->dbg_trap = vlSelf->Top__DOT__controlReset;
     vlSelf->dbg_wb_value = ((IData)(vlSelf->Top__DOT__destinationEnable)
                              ? ((vlSelf->Top__DOT__memoryWritebackPayload[1U] 
                                  << 0x1dU) | (vlSelf->Top__DOT__memoryWritebackPayload[0U] 
                                               >> 3U))
                              : 0U);
-    vlSelf->dbg_trap = vlSelf->Top__DOT__controlReset;
 }
 
 void VTop___024root___act_sequent__TOP__0(VTop___024root* vlSelf);
@@ -553,13 +553,13 @@ VL_ATTR_COLD void VTop___024root___eval_stl(VTop___024root* vlSelf) {
     if ((1ULL & vlSelf->__VstlTriggered.word(0U))) {
         VTop___024root___stl_sequent__TOP__0(vlSelf);
     }
-    if ((5ULL & vlSelf->__VstlTriggered.word(0U))) {
+    if ((3ULL & vlSelf->__VstlTriggered.word(0U))) {
         VTop___024root___act_sequent__TOP__0(vlSelf);
     }
-    if ((9ULL & vlSelf->__VstlTriggered.word(0U))) {
+    if ((5ULL & vlSelf->__VstlTriggered.word(0U))) {
         VTop___024root___act_sequent__TOP__1(vlSelf);
     }
-    if ((3ULL & vlSelf->__VstlTriggered.word(0U))) {
+    if ((9ULL & vlSelf->__VstlTriggered.word(0U))) {
         VTop___024root___act_sequent__TOP__2(vlSelf);
     }
     if ((0xdULL & vlSelf->__VstlTriggered.word(0U))) {
