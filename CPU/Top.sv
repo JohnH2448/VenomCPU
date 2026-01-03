@@ -139,7 +139,13 @@ module Top (
         .decodeExecuteControl(decodeExecuteControl),
         .executeMemoryControl(executeMemoryControl),
         .memoryWritebackControl(memoryWritebackControl),
-        .controlReset(controlReset)
+        .controlReset(controlReset),
+        .decodeExecuteRegister1(decodeExecutePayload.readAddress1),
+        .decodeExecuteRegister2(decodeExecutePayload.readAddress2),
+        .executeMemoryDestinationRegister(executeMemoryPayload.destinationRegister),
+        .executeMemoryValid(executeMemoryPayload.valid),
+        .executeMemoryWritebackType(executeMemoryPayload.writebackType),
+        .loadDataValid(loadDataValid)
     );
 
     Fetch fetch (

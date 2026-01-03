@@ -97,7 +97,7 @@ VL_ATTR_COLD void VTop___024root___eval_settle(VTop___024root* vlSelf) {
 #ifdef VL_DEBUG
             VTop___024root___dump_triggers__stl(vlSelf);
 #endif
-            VL_FATAL_MT("Top.sv", 3, "", "Settle region did not converge.");
+            VL_FATAL_MT("CPU/Top.sv", 3, "", "Settle region did not converge.");
         }
         __VstlIterCount = ((IData)(1U) + __VstlIterCount);
         __VstlContinue = 0U;
@@ -373,10 +373,10 @@ VL_ATTR_COLD void VTop___024root___stl_sequent__TOP__0(VTop___024root* vlSelf) {
     vlSelf->Top__DOT__instructionDataValid = (1U & 
                                               (~ (IData)(vlSelf->reset)));
     vlSelf->dbg_pc = vlSelf->Top__DOT__fetch__DOT__programCounter;
-    vlSelf->Top__DOT__loadDataValid = (1U & (~ (IData)(vlSelf->reset)));
     vlSelf->dbg_ID_EX_Valid = (1U & vlSelf->Top__DOT__decodeExecutePayload[0U]);
-    vlSelf->dbg_EX_MEM_Valid = (1U & vlSelf->Top__DOT__executeMemoryPayload[0U]);
+    vlSelf->Top__DOT__loadDataValid = (1U & (~ (IData)(vlSelf->reset)));
     vlSelf->dbg_MEM_WB_Valid = (1U & vlSelf->Top__DOT__memoryWritebackPayload[0U]);
+    vlSelf->dbg_EX_MEM_Valid = (1U & vlSelf->Top__DOT__executeMemoryPayload[0U]);
     vlSelf->dbg_registers[0U] = vlSelf->Top__DOT__debug_regs_flat[0U];
     vlSelf->dbg_registers[1U] = vlSelf->Top__DOT__debug_regs_flat[1U];
     vlSelf->dbg_registers[2U] = vlSelf->Top__DOT__debug_regs_flat[2U];
@@ -540,9 +540,9 @@ VL_ATTR_COLD void VTop___024root___stl_sequent__TOP__0(VTop___024root* vlSelf) {
                              : 0U);
 }
 
-void VTop___024root___act_sequent__TOP__0(VTop___024root* vlSelf);
-void VTop___024root___act_sequent__TOP__1(VTop___024root* vlSelf);
+void VTop___024root___nba_comb__TOP__2(VTop___024root* vlSelf);
 void VTop___024root___act_sequent__TOP__2(VTop___024root* vlSelf);
+void VTop___024root___act_sequent__TOP__3(VTop___024root* vlSelf);
 void VTop___024root___act_comb__TOP__0(VTop___024root* vlSelf);
 
 VL_ATTR_COLD void VTop___024root___eval_stl(VTop___024root* vlSelf) {
@@ -554,13 +554,13 @@ VL_ATTR_COLD void VTop___024root___eval_stl(VTop___024root* vlSelf) {
         VTop___024root___stl_sequent__TOP__0(vlSelf);
     }
     if ((3ULL & vlSelf->__VstlTriggered.word(0U))) {
-        VTop___024root___act_sequent__TOP__0(vlSelf);
+        VTop___024root___nba_comb__TOP__2(vlSelf);
     }
     if ((5ULL & vlSelf->__VstlTriggered.word(0U))) {
-        VTop___024root___act_sequent__TOP__1(vlSelf);
+        VTop___024root___act_sequent__TOP__2(vlSelf);
     }
     if ((9ULL & vlSelf->__VstlTriggered.word(0U))) {
-        VTop___024root___act_sequent__TOP__2(vlSelf);
+        VTop___024root___act_sequent__TOP__3(vlSelf);
     }
     if ((0xdULL & vlSelf->__VstlTriggered.word(0U))) {
         VTop___024root___act_comb__TOP__0(vlSelf);

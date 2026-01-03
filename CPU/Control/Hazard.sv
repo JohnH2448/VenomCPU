@@ -13,7 +13,14 @@ module Hazard (
     output control decodeExecuteControl,
     output control executeMemoryControl,
     output control memoryWritebackControl,
-    output logic controlReset
+    output logic controlReset,
+    // for load-use
+    input logic [4:0] decodeExecuteRegister1,
+    input logic [4:0] decodeExecuteRegister2,
+    input logic [4:0] executeMemoryDestinationRegister,
+    input logic executeMemoryValid,
+    input writebackType_ executeMemoryWritebackType,
+    input logic loadDataValid
 );
     // Trap Handler
     always_comb begin
@@ -47,9 +54,21 @@ module Hazard (
                 executeMemoryControl.stall = 1'b1;
                 memoryWritebackControl.stall = 1'b1;
             end
+            // Load-Use Hazard
+            if (loadDataValid) begin
+                if (decodeExecuteValid && (decodeExecuteRegister1 != 5'd0) && (decodeExecuteRegister1 == executeMemoryDestinationRegister) && executeMemoryValid && (executeMemoryWritebackType == WB_MEM)) begin
+                    fetchDecodeControl.stall = 1'b1;
+                    decodeExecuteControl.stall = 1'b1;
+                    executeMemoryControl.flush = 1'b1;
+                end
+                if (decodeExecuteValid && (decodeExecuteRegister2 != 5'd0) && (decodeExecuteRegister2 == executeMemoryDestinationRegister) && executeMemoryValid && (executeMemoryWritebackType == WB_MEM)) begin
+                    fetchDecodeControl.stall = 1'b1;
+                    decodeExecuteControl.stall = 1'b1;
+                    executeMemoryControl.flush = 1'b1;
+                end
+            end
         end
     end
-    // almost done but add RAW
 
 endmodule
 

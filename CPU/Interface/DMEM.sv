@@ -43,7 +43,7 @@ module Dmem #(
             if (storeValid && !storeValid_q) begin
                 int idx;
                 logic [31:0] word;
-                idx  = address[ADDR_MSB:ADDR_LSB];
+                idx = address[ADDR_MSB:ADDR_LSB];
                 word = mem[idx];
                 if (byteEnable[0]) word[7:0] = storeData[7:0];
                 if (byteEnable[1]) word[15:8] = storeData[15:8];
