@@ -9,3 +9,4 @@
 - Almost RISCOF Verified (bear with me)
 
 ## Free to use, just email me at jch0100@uah.edu
+## DO NOT USE prototype versions. they are not verified
