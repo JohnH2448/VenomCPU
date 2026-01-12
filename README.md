@@ -1,8 +1,8 @@
 # VenomCPU
-## RISC-V RV32I Pipelined CPU Core in SystemVerilog
+## RISC-V CPU Core in SystemVerilog
 ### Features:
-- In Order 5 Stage Pipeline
-- Variable Latency MEM Interface
-- Forwarding + WB->ID Data Pass
-- Comprehensive Base RV32I Execution
+- 5 Stage Pipeline
+- RV32IZicsr ISA
+- Machine-Mode Execution
+- Almost RISCOF Verified (bear with me)
 
