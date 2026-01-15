@@ -17,7 +17,7 @@ module Execute (
     output destinationCSR_ destinationCSR,
     input logic [31:0] csrReadData,
     input logic csrForwardEnable,
-    input logic csrForwardData
+    input logic [31:0] csrForwardData
 );
 
     logic [31:0] operand1;
