@@ -14,7 +14,8 @@ module Execute (
     input logic [31:0] forwardData1,
     input logic [31:0] forwardData2,
     // CSR interface
-    input logic [31:0] csrReadData,
+    output logic destinationCSR,
+    input logic [31:0] CSRReadData,
     input logic csrForwardEnable,
     input logic csrForwardData
 );
@@ -26,6 +27,7 @@ module Execute (
     logic [31:0] brOp1, brOp2;
     logic [31:0] csrOperand;
     logic [31:0] tempResult;
+    logic [31:0] forwardCorrectedCSRReadData;
 
     always_comb begin
         branchValid = '0;
@@ -35,7 +37,7 @@ module Execute (
         operand2 = 32'd0;
         result = 32'd0;
         branchData = 32'd0;
-        decodeExecuteCSRWriteIntent = decodeExecutePayload.decodeExecuteCSR.CSRWriteIntent;
+        forwardCorrectedCSRReadData = csrForwardEnable ? csrForwardData : CSRReadData;
         brOp1 = forwardEnable1 ? forwardData1 : decodeExecutePayload.registerData1;
         brOp2 = forwardEnable2 ? forwardData2 : decodeExecutePayload.registerData2;
         csrOperand = decodeExecutePayload.decodeExecuteCSR.CSRSrc ? brOp1 : {27'd0, decodeExecutePayload.decodeExecuteCSR.CSRImmediate};
@@ -116,8 +118,8 @@ module Execute (
             unique case (decodeExecutePayload.decodeExecuteCSR.CSROp)
                 default: ;
                 CSR_RW: tempResult = csrOperand;
-                CSR_RS: tempResult = csrReadData | csrOperand;
-                CSR_RC: tempResult = csrReadData & ~csrOperand;
+                CSR_RS: tempResult = forwardCorrectedCSRReadData | csrOperand;
+                CSR_RC: tempResult = forwardCorrectedCSRReadData & ~csrOperand;
             endcase
             unique case (destinationCSR)
                 MSTATUS: begin
@@ -139,7 +141,7 @@ module Execute (
                     result[11] = tempResult[11]; // MEIE
                 end
                 MIP: begin
-                    result = csrReadData;
+                    result = forwardCorrectedCSRReadData;
                 end
                 MSCRATCH,
                 MCAUSE,
@@ -186,7 +188,7 @@ module Execute (
             executeMemoryPayload.illegal <= decodeExecutePayload.illegal;
             // csr
             executeMemoryPayload.destinationCSR <= decodeExecutePayload.decodeExecuteCSR.destinationCSR;
-            executeMemoryPayload.oldCSRValue <= csrReadData;
+            executeMemoryPayload.oldCSRValue <= forwardCorrectedCSRReadData;
             executeMemoryPayload.CSROp <= decodeExecutePayload.decodeExecuteCSR.CSROp;
             executeMemoryPayload.CSRWriteIntent <= decodeExecutePayload.decodeExecuteCSR.CSRWriteIntent;
         end

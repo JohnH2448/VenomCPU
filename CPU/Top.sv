@@ -105,9 +105,10 @@ module Top (
     logic csrDestinationEnable;
     logic [31:0] csrWriteData;
 
-    // Forewarding Unit
-    logic [31:0] csrForwardData,
-    logic csrForwardEnable
+    // Forwarding Unit
+    logic [31:0] csrForwardData;
+    logic csrForwardEnable;
+
 
 
     Forward forward (
@@ -131,7 +132,7 @@ module Top (
         .oldCSRData(executeMemoryPayload.oldCSRValue),
         .executeMemoryDestinationCSR(executeMemoryPayload.destinationCSR),
         .executeMemoryCSRWriteIntent(executeMemoryPayload.CSRWriteIntent),
-        .executeMemoryCSRData(executeMemoryPayload.result)
+        .executeMemoryCSRData(executeMemoryPayload.result),
         .memoryWritebackDestinationCSR(memoryWritebackPayload.destinationCSR),
         .memoryWritebackCSRWriteIntent(memoryWritebackPayload.CSRWriteIntent),
         .decodeExecuteDestinationCSR(decodeExecutePayload.decodeExecuteCSR.destinationCSR),
@@ -235,7 +236,9 @@ module Top (
         .forwardData1(forwardData1),
         .forwardData2(forwardData2),
         .csrReadData(csrReadData),
-        .destinationCSR(readCSR)
+        .destinationCSR(readCSR),
+        .csrForwardEnable(csrForwardEnable),
+        .csrForwardData(csrForwardData)
     );
 
     Memory memory (
