@@ -3,8 +3,8 @@
 ### Specifications:
 - In Order 5 Stage Pipeline
 - Variable Latency MEM Interface
-- Forwarding + WB->ID Data Pass
-- Comprehensive Base RV32I Execution
+- M-Mode Privilaged ISA
+- Base RV32I + Zicsr Support
 
 ## Free to use, just email me at jch0100@uah.edu
 ## DO NOT USE prototype versions. they are not verified
