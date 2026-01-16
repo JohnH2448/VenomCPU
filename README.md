@@ -5,6 +5,8 @@
 ### DO NOT USE prototype versions. they are not verified
 ### Specifications:
 - In Order 5 Stage Pipeline
-- Variable Latency MEM Interface
+- Deterministic Variable Latency
+  MEM Interface Designed For a
+  Harness
 - M-Mode Privilaged ISA
 - Base RV32I + Zicsr Support
