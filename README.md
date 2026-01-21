@@ -4,10 +4,9 @@
 ### Specifications:
 - In-Order 5-Stage Pipeline
 - Handshake Based IF + MEM For Arbitrary External RAM
-- M-Mode Privilaged ISA
-- Zicsr (CSR Decode Package)
+- Precise Trap Behavior
+- Zicsr + M-Mode Privilaged ISA
 - RV32I Base Integer Instruction Set
-
 ## Supported CSR Reference Table
 | CSR       | ACCESS | NOTES                                 |
 |-----------|--------|---------------------------------------|
