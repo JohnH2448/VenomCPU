@@ -18,7 +18,7 @@ This SystemVerilog core comes with a corresponding simulator to more easily obse
 ./Verilator/VTop
 ```
 
-For non-trivial debugging, a custom test harness may be necessary. To create a custom test harness and rebuild the simulator, you must have the Verilator CLI tool installed. From there, create a new file in the repository root named sim_main.cpp. Refer to the Verilator documentation for guidance on writing a custom C++ test harness tailored to your specific needs. Once the file is complete, run the following commands:
+For non-trivial debugging, a custom test harness may be necessary. To create a custom test harness and rebuild the simulator, you must have the Verilator CLI tool installed. From there, create a new file in the repository root named `sim_main.cpp`. Refer to the Verilator documentation for guidance on writing a custom C++ test harness tailored to your specific needs. Once the file is complete, run the following commands:
 ```bash
 # Version
 Verilator 5.020 2024-01-01 rev (Debian 5.020-1)
@@ -38,12 +38,16 @@ make -C Verilator -f VTop.mk -j"$(nproc)"
 # Executes the simulation
 ./Verilator/VTop
 ```
-Any changes to the HDL require a full rebuild of both the C program and the executable. For edits to the test harness alone, only rebuilding the executable is necessary. Print statements may also exist in the outsude of the test harness, and could hinder directed testing. Ensure all $display and $strobe commands inside the HDL are removed if a blank slate simulation is required. 
+Any changes to the HDL require a full rebuild of both the C program and the executable. For edits to the test harness alone, only rebuilding the executable is necessary. Print statements may also exist in the outsude of the test harness, and could hinder directed testing. **Ensure all $display and $strobe commands inside the HDL are removed** if a blank slate simulation is required. 
 
 ## Memory
-VenomCPU supports decouplable memory, so the core is compatable with any arbitrary RAM that meets the handshake spec. The LUTRAM (or BRAM) written in SystemVerilog in the Core/ directory exists for bringup, but may be configured or replaced. To add or subtract how many RAM cells are built with the default memory, edit the parameter memoryWords in ConfigPack.sv. It is reccomended you keep it to a power of two to prevent non-existent addressing.
+VenomCPU uses a decoupled memory interface, allowing the core to operate with any external RAM implementation that conforms to the defined handshake protocol. The included LUTRAM/BRAM implementation in the `Core/` directory is intended for initial bring-up and simulation, but can be modified or replaced as needed.
 
-If you choose to sub out the RAM, it may be necessary to build an HDL harness to meet the handsake protocol. This protocol is defined in a .txt file contained in the Core/Interface/ directory, and must be met for valid memory interaction. The CPU is deterministic and will adhere to the protocol, but it makes setup and hold assumptions. For async memory, or memory in a seperate clock domain, it is necessary to accomidate for these assumptions and metastability issues in the harness.
+The size of the default memory can be configured by adjusting the `memoryBytes` parameter in `ConfigPack.sv`. It is recommended to use a word aligned, power-of-two depth to avoid invalid or unmapped address ranges.
+
+If you choose to replace the default memory implementation, you may need to create a custom HDL memory harness that satisfies the required handshake behavior. The full protocol specification is provided in `Core/Interface/`.
+
+VenomCPU guarantees deterministic behavior and will strictly adhere to this interface contract. However, the core assumes standard synchronous setup and hold timing. When interfacing with asynchronous memory or memory operating in a separate clock domain, additional synchronization logic **must be implemented** in the harness to handle clock domain crossing and prevent metastability.
 
 ## Supported CSR Reference Table
 | CSR       | ACCESS | NOTES                                 |
@@ -63,10 +67,11 @@ If you choose to sub out the RAM, it may be necessary to build an HDL harness to
 | MINSTRET  | MRW    | Writes Override Hardware Incriments   |
 
 ## Development Roadmap
-1. Verification with randomized multi-cycle RAM
-2. Fabric usage redction and optimization
-3. Verification with contrained randomized tests
-4. Load buffer with dependency checks
-5. Hardware interupt timer and spec accurate handling
-6. FreeRTOS compatability
+1. `memoryBytes` plumbing
+2. Verification with randomized multi-cycle RAM
+3. Fabric usage redction and optimization
+4. Verification with contrained randomized tests
+5. Load buffer with dependency checks
+6. Hardware interupt timer and spec accurate handling
+7. FreeRTOS compatability
 
